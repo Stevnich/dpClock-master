@@ -1,0 +1,150 @@
+<Window xmlns="https://github.com/avaloniaui"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     mc:Ignorable="d" d:DesignWidth="407" d:DesignHeight="460"
+     x:Class="dpClock_master.MainWindow"
+     Title="dpClock"
+     Width="407" Height="460"
+     CanResize="False"
+     WindowStartupLocation="CenterScreen"
+     ExtendClientAreaToDecorationsHint="True"
+     ExtendClientAreaTitleBarHeightHint="38">
+
+     <NativeMenu.Menu>
+          <NativeMenu>
+               <NativeMenuItem Header="File">
+                    <NativeMenu>
+                         <NativeMenuItem Header="Use Configuration" Click="UseConfiguration_Click"/>
+                         <NativeMenuItem Header="Import Playlist" Click="ImportPlaylist_Click"/>
+                    </NativeMenu>
+               </NativeMenuItem>
+               <NativeMenuItem Header="Edit">
+                    <NativeMenu>
+                         <NativeMenuItem Header="Settings" Click="Settings_Click"/>
+                    </NativeMenu>
+               </NativeMenuItem>
+               <NativeMenuItem Header="Window"/>
+          </NativeMenu>
+     </NativeMenu.Menu>
+
+     <Grid RowDefinitions="Auto,Auto,Auto,*">
+          <Border x:Name="TitleBar" Grid.Row="0" Height="38" Background="{DynamicResource MacToolbarBackground}" PointerPressed="TitleBar_PointerPressed">
+               <Grid>
+                    <!-- Only shown on Windows/Linux; macOS draws its own traffic lights -->
+                    <Border x:Name="TrafficLights" Classes="lights"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Margin="13,0,0,0" Background="Transparent">
+                         <StackPanel Orientation="Horizontal" Spacing="8">
+                              <Button Classes="traffic close" Content="×" Click="Close_Click"/>
+                              <Button Classes="traffic minimize" Content="−" Click="Minimize_Click"/>
+                              <!-- WinForms MaximizeBox = false -->
+                              <Button Classes="traffic zoom" Content="+" IsEnabled="False"/>
+                         </StackPanel>
+                    </Border>
+                    <TextBlock Text="dpClock" FontWeight="SemiBold" Foreground="{DynamicResource MacSecondaryLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+               </Grid>
+          </Border>
+          <NativeMenuBar Grid.Row="1"/>
+          <Border x:Name="notify" Grid.Row="2" Height="30" Background="{DynamicResource MacToolbarBackground}" BorderBrush="{DynamicResource MacSeparator}" BorderThickness="0,0,0,1">
+               <Grid ColumnDefinitions="*,Auto" Margin="14,0">
+                    <TextBlock x:Name="notify_heading_currClock" Grid.Column="0" Classes="heading" Text="00:00:00" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                         <!-- notify_icon_timer: hourglass -->
+                         <PathIcon x:Name="notify_icon_timer" IsVisible="False" Width="14" Height="14" Foreground="{DynamicResource MacSecondaryLabel}"
+                                   Data="M6,2 L18,2 L18,8 L14,12 L18,16 L18,22 L6,22 L6,16 L10,12 L6,8 Z"/>
+                         <!-- notify_icon_Dudepower_Clock: moon -->
+                         <PathIcon x:Name="notify_icon_Dudepower_Clock" IsVisible="False" Width="14" Height="14" Foreground="{DynamicResource MacSecondaryLabel}"
+                                   Data="M20,13 A8,8 0 1 1 11,4 A6.5,6.5 0 0 0 20,13 Z"/>
+                         <!-- notify_icon_weaker: alarm bell -->
+                         <PathIcon x:Name="notify_icon_weaker" IsVisible="False" Width="14" Height="14" Foreground="{DynamicResource MacSecondaryLabel}"
+                                   Data="M12,2 C8,2 6,5 6,9 L6,14 L4,17 L20,17 L18,14 L18,9 C18,5 16,2 12,2 Z M10,19 A2,2 0 0 0 14,19 Z"/>
+                         <!-- notify_icon_stopwatch -->
+                         <PathIcon x:Name="notify_icon_stopwatch" IsVisible="False" Width="14" Height="14" Foreground="{DynamicResource MacSecondaryLabel}"
+                                   Data="F1 M9,2 L15,2 L15,4 L9,4 Z M12,6 A8,8 0 1 0 12,22 A8,8 0 1 0 12,6 Z M11,9 L13,9 L13,15 L11,15 Z"/>
+                    </StackPanel>
+               </Grid>
+          </Border>
+
+          <TabControl x:Name="tab_main" Grid.Row="3" SelectedIndex="2">
+               <TabItem x:Name="tab_timer" Header="Timer">
+                    <Grid RowDefinitions="Auto,*" Margin="0,24,0,0">
+
+                         <Grid Grid.Row="0" Height="56" HorizontalAlignment="Center">
+                              <StackPanel x:Name="tab_timer_timeControl" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                   <NumericUpDown x:Name="tab_timer_timeControl_hourTimeEditor" Classes="time" Width="104" Minimum="0" Maximum="99" Value="0" Increment="1" FormatString="00" ParsingNumberStyle="Integer"/>
+                                   <NumericUpDown x:Name="tab_timer_timeControl_minuteTimeEditor" Classes="time" Width="104" Minimum="0" Maximum="59" Value="5" Increment="1" FormatString="00" ParsingNumberStyle="Integer"/>
+                                   <NumericUpDown x:Name="tab_timer_timeControl_secondTimeEditor" Classes="time" Width="104" Minimum="0" Maximum="59" Value="0" Increment="1" FormatString="00" ParsingNumberStyle="Integer"/>
+                              </StackPanel>
+                              <TextBlock x:Name="tab_timer_heading_timerLabel" Classes="display" Text="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False"/>
+                         </Grid>
+
+                         <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,64,0,0">
+                              <Button x:Name="tab_timer_btn_timerStart" Classes="primary large" Content="Start" Width="104" Height="44" Click="_tab_timer_btn_timerStart"/>
+                              <Button x:Name="tab_timer_btn_timerPause" Classes="large" Content="Pause" Width="104" Height="44" IsVisible="False" Click="_tab_timer_btn_timerPause"/>
+                         </StackPanel>
+                    </Grid>
+               </TabItem>
+
+               <TabItem x:Name="tab_stopwatch" Header="Stopwatch">
+                    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="28,8,28,22">
+                         <TextBlock x:Name="tab_stopwatch_heading_overallTime" Grid.Row="0" Classes="displaySmall" Text="00:00:00" HorizontalAlignment="Center" IsVisible="False"/>
+                         <TextBlock x:Name="tab_stopwatch_heading_time" Grid.Row="1" Classes="display" Text="00:00:00" HorizontalAlignment="Center" Margin="0,16,0,0"/>
+
+                         <Grid x:Name="tab_stopwatch_pnl_lapList" Grid.Row="2" IsVisible="False"
+                               RowDefinitions="Auto,Auto,*" Margin="0,14,0,12">
+                              <Grid Grid.Row="0" ColumnDefinitions="90,108,*" Margin="8,0,0,4">
+                                   <TextBlock x:Name="tab_stopwatch_pnl_lapList_heading_lapID" Grid.Column="0" Classes="columnHeader" Text="Round"/>
+                                   <TextBlock x:Name="tab_stopwatch_pnl_lapList_heading_lapTime" Grid.Column="1" Classes="columnHeader" Text="Lap Time"/>
+                                   <TextBlock x:Name="tab_stopwatch_pnl_lapList_heading_tab_stopwatch_pnl_lapList_heading_overAllTime" Grid.Column="2" Classes="columnHeader" Text="Overall Time"/>
+                              </Grid>
+                              <Border x:Name="tab_stopwatch_pnl_lapList_separator" Grid.Row="1" Height="1" Background="{DynamicResource MacSeparator}"/>
+                              <ListBox x:Name="lapList" Grid.Row="2" Margin="0,4,0,0"/>
+                         </Grid>
+
+                         <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="64" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                              <Button x:Name="tab_stopwatch_btn_recReset" Classes="large" Content="Round" Width="104" Height="44" Click="_tab_stopwatch_btn_recReset"/>
+                              <Button x:Name="tab_stopwatch_btn_startStop" Classes="primary large" Content="Start" Width="104" Height="44" Click="_tab_stopwatch_btn_startStop"/>
+                         </StackPanel>
+                    </Grid>
+               </TabItem>
+
+               <TabItem x:Name="tab_Dudepower_Clock" Header="Sleep Time">
+                    <StackPanel Margin="0,24,0,0" Spacing="26" HorizontalAlignment="Center">
+                         <Grid Height="56" HorizontalAlignment="Center">
+                              <StackPanel x:Name="tab_Dudepower_Clock_timeControl" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                   <NumericUpDown x:Name="tab_Dudepower_Clock_timeControl_hourTimeEditor" Classes="time" Width="104" Minimum="0" Maximum="99" Value="0" Increment="1" FormatString="00" ParsingNumberStyle="Integer"/>
+                                   <NumericUpDown x:Name="tab_Dudepower_Clock_timeControl_minuteTimeEditor" Classes="time" Width="104" Minimum="0" Maximum="59" Value="5" Increment="1" FormatString="00" ParsingNumberStyle="Integer"/>
+                                   <NumericUpDown x:Name="tab_Dudepower_Clock_timeControl_secondTimeEditor" Classes="time" Width="104" Minimum="0" Maximum="59" Value="0" Increment="1" FormatString="00" ParsingNumberStyle="Integer"/>
+                              </StackPanel>
+                              <TextBlock x:Name="tab_Dudepower_Clock_targetTime" Classes="display" Text="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False"/>
+                         </Grid>
+
+                         <Button x:Name="tab_Dudepower_Clock_btn_enableDudepower_Clock" Classes="primary large" Content="Enable"
+                                 Width="104" Height="44" HorizontalAlignment="Center"
+                                 Click="_tab_Dudepower_Clock_btn_enableDudepower_Clock"/>
+
+                         <Button x:Name="tab_Dudepower_Clock_drop_task" Width="188" Height="28"
+                                 HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Padding="10,0,8,0">
+                              <Grid ColumnDefinitions="*,Auto">
+                                   <!-- set this TextBlock's Text where WinForms set drop_task.Text -->
+                                   <TextBlock x:Name="tab_Dudepower_Clock_drop_task_label" Grid.Column="0" Text="Reminder" VerticalAlignment="Center"/>
+                                   <Path Grid.Column="1" Data="M1,4 L4,1 L7,4 M1,8 L4,11 L7,8" Stroke="{DynamicResource MacSecondaryLabel}" StrokeThickness="1.5" StrokeLineCap="Round" StrokeJoin="Round" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                              </Grid>
+                              <Button.Flyout>
+                                   <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                        <MenuItem x:Name="drop_task_option_reminder" Header="Reminder" Click="_drop_task_option_reminder"/>
+                                        <MenuItem x:Name="drop_task_option_shutDown" Header="Shut Down PC" Click="_drop_task_option_shutDown"/>
+                                        <MenuItem x:Name="drop_task_option_command" Header="Command" Click="_drop_task_option_command"/>
+                                   </MenuFlyout>
+                              </Button.Flyout>
+                         </Button>
+                         <Grid Width="236" HorizontalAlignment="Center">
+                              <TextBox x:Name="tab_Dudepower_Clock_input_reminder" FontSize="15" PlaceholderText="Reminder text"/>
+                              <TextBox x:Name="tab_Dudepower_Clock_input_command" FontSize="15" PlaceholderText="Command to run" IsVisible="False"/>
+                         </Grid>
+                    </StackPanel>
+               </TabItem>
+          </TabControl>
+     </Grid>
+</Window>

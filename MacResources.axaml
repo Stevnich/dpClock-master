@@ -1,0 +1,90 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- ============================================================
+       macOS (Dark Aqua) palette + overrides of FluentTheme resources.
+       Include this in Application.Resources (see App.axaml) so it wins
+       over the theme's own values.
+       ============================================================ -->
+
+  <!-- Accent: macOS "Blue" -->
+  <Color x:Key="SystemAccentColor">#0A84FF</Color>
+  <Color x:Key="SystemAccentColorLight1">#409CFF</Color>
+  <Color x:Key="SystemAccentColorLight2">#64B0FF</Color>
+  <Color x:Key="SystemAccentColorLight3">#99CCFF</Color>
+  <Color x:Key="SystemAccentColorDark1">#0A74E0</Color>
+  <Color x:Key="SystemAccentColorDark2">#0A64C0</Color>
+  <Color x:Key="SystemAccentColorDark3">#0A54A0</Color>
+
+  <!-- Fonts -->
+  <FontFamily x:Key="MacFont">-apple-system, .AppleSystemUIFont, SF Pro Text, Helvetica Neue, Inter, Segoe UI, Ubuntu, sans-serif</FontFamily>
+  <FontFamily x:Key="MacMonoFont">SF Mono, Menlo, Cascadia Mono, Consolas, DejaVu Sans Mono, monospace</FontFamily>
+
+  <!-- Surfaces -->
+  <SolidColorBrush x:Key="MacWindowBackground" Color="#1E1E1E"/>
+  <SolidColorBrush x:Key="MacToolbarBackground" Color="#2B2B2D"/>
+  <SolidColorBrush x:Key="MacSeparator" Color="#3D3D40"/>
+
+  <!-- Labels -->
+  <SolidColorBrush x:Key="MacLabel" Color="#D9FFFFFF"/>
+  <SolidColorBrush x:Key="MacSecondaryLabel" Color="#99EBEBF5"/>
+  <SolidColorBrush x:Key="MacTertiaryLabel" Color="#4DEBEBF5"/>
+
+  <!-- Accent brushes -->
+  <SolidColorBrush x:Key="MacAccent" Color="#0A84FF"/>
+  <SolidColorBrush x:Key="MacAccentHover" Color="#3D9BFF"/>
+  <SolidColorBrush x:Key="MacAccentPressed" Color="#0A6FD6"/>
+
+  <!-- Push buttons -->
+  <SolidColorBrush x:Key="MacButtonBackground" Color="#5E5E61"/>
+  <SolidColorBrush x:Key="MacButtonBackgroundHover" Color="#6A6A6D"/>
+  <SolidColorBrush x:Key="MacButtonBackgroundPressed" Color="#515154"/>
+  <SolidColorBrush x:Key="MacButtonBackgroundDisabled" Color="#363638"/>
+  <SolidColorBrush x:Key="MacButtonBorder" Color="#1AFFFFFF"/>
+
+  <!-- Text fields -->
+  <SolidColorBrush x:Key="MacInputBackground" Color="#2A2A2C"/>
+  <SolidColorBrush x:Key="MacInputBorder" Color="#3F3F42"/>
+
+  <!-- Segmented control (tabs) -->
+  <SolidColorBrush x:Key="MacSegmentTrack" Color="#333335"/>
+  <SolidColorBrush x:Key="MacSegmentHover" Color="#3E3E41"/>
+  <SolidColorBrush x:Key="MacSegmentSelected" Color="#636366"/>
+
+  <!-- List rows -->
+  <SolidColorBrush x:Key="MacRowHover" Color="#1AFFFFFF"/>
+  <SolidColorBrush x:Key="MacRowSelectedInactive" Color="#3F3F42"/>
+
+  <!-- ============ FluentTheme overrides ============ -->
+  <CornerRadius x:Key="ControlCornerRadius">6</CornerRadius>
+  <CornerRadius x:Key="OverlayCornerRadius">10</CornerRadius>
+
+  <!-- TextBox / NumericUpDown inner TextBox -->
+  <SolidColorBrush x:Key="TextControlBackground" Color="#2A2A2C"/>
+  <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#2E2E30"/>
+  <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#2A2A2C"/>
+  <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="#242426"/>
+  <SolidColorBrush x:Key="TextControlBorderBrush" Color="#3F3F42"/>
+  <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#4A4A4D"/>
+  <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#0A84FF"/>
+  <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="#333335"/>
+  <SolidColorBrush x:Key="TextControlForeground" Color="#D9FFFFFF"/>
+  <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="#D9FFFFFF"/>
+  <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#D9FFFFFF"/>
+  <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#4DEBEBF5"/>
+  <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#4DEBEBF5"/>
+  <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#4DEBEBF5"/>
+  <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#0A84FF"/>
+
+  <!-- Menus and pop-up menus: blue highlight with white text, like AppKit -->
+  <SolidColorBrush x:Key="MenuFlyoutPresenterBackground" Color="#F0303033"/>
+  <SolidColorBrush x:Key="MenuFlyoutPresenterBorderBrush" Color="#33FFFFFF"/>
+  <SolidColorBrush x:Key="MenuFlyoutItemBackgroundPointerOver" Color="#0A84FF"/>
+  <SolidColorBrush x:Key="MenuFlyoutItemBackgroundPressed" Color="#0A6FD6"/>
+  <SolidColorBrush x:Key="MenuFlyoutItemForeground" Color="#D9FFFFFF"/>
+  <SolidColorBrush x:Key="MenuFlyoutItemForegroundPointerOver" Color="#FFFFFFFF"/>
+  <SolidColorBrush x:Key="MenuFlyoutItemForegroundPressed" Color="#FFFFFFFF"/>
+  <SolidColorBrush x:Key="MenuBarBackground" Color="#2B2B2D"/>
+  <SolidColorBrush x:Key="MenuBarItemBackgroundPointerOver" Color="#1AFFFFFF"/>
+  <SolidColorBrush x:Key="MenuBarItemBackgroundPressed" Color="#26FFFFFF"/>
+</ResourceDictionary>

@@ -1,0 +1,35 @@
+<Application xmlns="https://github.com/avaloniaui"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+     x:Class="dpClock_master.App"
+     RequestedThemeVariant="Dark">
+
+     <Application.Resources>
+          <ResourceDictionary>
+               <ResourceDictionary.MergedDictionaries>
+                    <ResourceInclude Source="avares://dpClock-master/MacResources.axaml"/>
+               </ResourceDictionary.MergedDictionaries>
+          </ResourceDictionary>
+     </Application.Resources>
+
+     <Application.Styles>
+          <FluentTheme/>
+          <StyleInclude Source="avares://dpClock-master/MacOS.axaml"/>
+     </Application.Styles>
+
+     <!-- WinForms NotifyIcon "backTask" + ContextMenuStrip "backTaskContext".
+          Add your .ico to Assets (Build Action: AvaloniaResource) and uncomment Icon. -->
+     <TrayIcon.Icons>
+          <TrayIcons>
+               <TrayIcon ToolTipText="dpClock"
+                         Clicked="TrayIcon_Clicked">
+                    <!-- Icon="/Assets/dpclock.ico" -->
+                    <TrayIcon.Menu>
+                         <NativeMenu>
+                              <NativeMenuItem Header="Open dpClock" Click="_backTaskContext_openWindow"/>
+                              <NativeMenuItem Header="End Process" Click="_backTaskContext_endProcess"/>
+                         </NativeMenu>
+                    </TrayIcon.Menu>
+               </TrayIcon>
+          </TrayIcons>
+     </TrayIcon.Icons>
+</Application>
